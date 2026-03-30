@@ -30,4 +30,9 @@ public class ProductRepositoryImpl implements ProductRepository {
     public void deleteById(Long id) {
         products.remove(id);
     }
+
+    @Override
+    public int size() {
+        return products.size();
+    }
 }
