@@ -57,7 +57,7 @@ public class Product {
 
         public Product build() {
             if (Objects.isNull(name) || name.isEmpty()) {
-                throw new IllegalStateException("Debe proporcionar un nombre XXXXXXXX");
+                throw new IllegalStateException("The product name must be provided");
             }
             return new Product(this);
         }
