@@ -2,6 +2,7 @@ package com.engineeringcc.productmanagement.product.infrastructure;
 
 import com.engineeringcc.productmanagement.common.mediator.Mediator;
 import com.engineeringcc.productmanagement.product.application.CreateProductRequest;
+import com.engineeringcc.productmanagement.product.application.UpdateProductRequest;
 import com.engineeringcc.productmanagement.product.domain.Product;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,12 @@ public class ProductController {
     public ResponseEntity<Void> create(@RequestBody CreateProductRequest request) {
         mediator.dispatch(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> update(@RequestBody UpdateProductRequest request) {
+        mediator.dispatch(request);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping(path = "{id}")
