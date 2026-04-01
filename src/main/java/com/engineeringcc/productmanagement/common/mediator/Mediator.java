@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @Component
 public class Mediator {
 
-    Map<? extends Class<?>, RequestHandler<?, ?>> requestHandlerMap;
+    private final Map<Class<? extends Request<?>>, RequestHandler<?, ?>> requestHandlerMap;
 
     public Mediator(List<RequestHandler<?, ?>> requestHandlers) {
         requestHandlerMap = requestHandlers
@@ -23,12 +23,23 @@ public class Mediator {
                 );
     }
 
-    public <R, T extends Request<R>> R dispatch(T request) {
-        RequestHandler<T, R> handler = (RequestHandler<T, R>) requestHandlerMap.get(request.getClass());
+    public <R> R dispatch(Request<R> request) {
+        RequestHandler<?, ?> rawHandler = requestHandlerMap.get(request.getClass());
 
-        if (handler == null) {
+        if (rawHandler == null) {
             throw new RuntimeException("No handler found for request type " + request.getClass());
         }
-        return handler.handle(request);
+
+        if (!rawHandler.getRequestType().isAssignableFrom(request.getClass())) {
+            throw new IllegalStateException("Handler/request type mismatch for request type " + request.getClass());
+        }
+
+        return invoke(rawHandler, request);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <R, T extends Request<R>> R invoke(RequestHandler<?, ?> rawHandler, Request<R> request) {
+        RequestHandler<T, R> handler = (RequestHandler<T, R>) rawHandler;
+        return handler.handle((T) request);
     }
 }
