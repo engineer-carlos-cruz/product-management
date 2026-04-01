@@ -1,8 +1,11 @@
 package com.engineeringcc.productmanagement.product.infrastructure;
 
 import com.engineeringcc.productmanagement.common.mediator.Mediator;
-import com.engineeringcc.productmanagement.product.application.CreateProductRequest;
-import com.engineeringcc.productmanagement.product.application.UpdateProductRequest;
+import com.engineeringcc.productmanagement.product.application.command.createProduct.CreateProductRequest;
+import com.engineeringcc.productmanagement.product.application.command.updateProduct.UpdateProductRequest;
+import com.engineeringcc.productmanagement.product.application.query.ProductResponse;
+import com.engineeringcc.productmanagement.product.application.query.getAllProducts.GetAllProductsRequest;
+import com.engineeringcc.productmanagement.product.application.query.getProductById.GetProductByIdRequest;
 import com.engineeringcc.productmanagement.product.domain.Product;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +24,14 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAll() {
-        return ResponseEntity.ok(List.of());
+    public ResponseEntity<List<ProductResponse>> getAll() {
+        return ResponseEntity.ok(mediator.dispatch(new GetAllProductsRequest()));
     }
 
     @GetMapping(path = "{id}")
-    public ResponseEntity<Product> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(Product.builder().build());
+    public ResponseEntity<ProductResponse> getById(@PathVariable Long id) {
+        GetProductByIdRequest request = new GetProductByIdRequest(id);
+        return ResponseEntity.ok(mediator.dispatch(request));
     }
 
     @PostMapping
