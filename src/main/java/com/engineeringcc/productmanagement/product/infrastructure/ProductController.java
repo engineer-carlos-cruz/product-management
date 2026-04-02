@@ -2,11 +2,11 @@ package com.engineeringcc.productmanagement.product.infrastructure;
 
 import com.engineeringcc.productmanagement.common.mediator.Mediator;
 import com.engineeringcc.productmanagement.product.application.command.createProduct.CreateProductRequest;
+import com.engineeringcc.productmanagement.product.application.command.deleteProduct.DeleteProductRequest;
 import com.engineeringcc.productmanagement.product.application.command.updateProduct.UpdateProductRequest;
 import com.engineeringcc.productmanagement.product.application.query.ProductResponse;
 import com.engineeringcc.productmanagement.product.application.query.getAllProducts.GetAllProductsRequest;
 import com.engineeringcc.productmanagement.product.application.query.getProductById.GetProductByIdRequest;
-import com.engineeringcc.productmanagement.product.domain.Product;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,5 +49,7 @@ public class ProductController {
     @DeleteMapping(path = "{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
+        DeleteProductRequest request = new DeleteProductRequest(id);
+        mediator.dispatch(request);
     }
 }
