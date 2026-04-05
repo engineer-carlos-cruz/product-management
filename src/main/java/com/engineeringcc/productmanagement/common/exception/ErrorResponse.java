@@ -39,14 +39,4 @@ public class ErrorResponse {
     public Map<String, String> getErrors() {
         return errors;
     }
-
-    @Override
-    public String toString() {
-        return "ErrorResponse{" +
-                "message='" + message + '\'' +
-                ", exception='" + exception + '\'' +
-                ", path='" + path + '\'' +
-                ", errors=" + errors +
-                '}';
-    }
 }
