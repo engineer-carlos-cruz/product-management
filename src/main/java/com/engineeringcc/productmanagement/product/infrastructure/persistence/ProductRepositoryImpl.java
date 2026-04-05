@@ -2,6 +2,7 @@ package com.engineeringcc.productmanagement.product.infrastructure.persistence;
 
 import com.engineeringcc.productmanagement.product.domain.Product;
 import com.engineeringcc.productmanagement.product.domain.ProductRepository;
+import com.engineeringcc.productmanagement.product.infrastructure.ProductMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -9,21 +10,31 @@ import java.util.*;
 @Repository
 public class ProductRepositoryImpl implements ProductRepository {
 
-    private final Map<Long, Product> products = new HashMap<>();
+    private final Map<Long, ProductEntity> products = new HashMap<>();
+    private final ProductMapper mapper;
+
+    public ProductRepositoryImpl(ProductMapper mapper) {
+        this.mapper = mapper;
+    }
 
     @Override
     public void save(Product product) {
-        products.put(product.getId(), product);
+        ProductEntity entity = mapper.toProductEntity(product);
+        products.put(entity.getId(), entity);
     }
 
     @Override
     public List<Product> findAll() {
-        return new ArrayList<>(products.values());
+        return products.values()
+                .stream()
+                .map(mapper::toProduct)
+                .toList();
     }
 
     @Override
     public Optional<Product> findById(Long id) {
-        return Optional.ofNullable(products.get(id));
+        Product product = mapper.toProduct(products.get(id));
+        return Optional.ofNullable(product);
     }
 
     @Override
