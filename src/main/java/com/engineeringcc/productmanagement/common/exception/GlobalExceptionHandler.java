@@ -1,5 +1,6 @@
 package com.engineeringcc.productmanagement.common.exception;
 
+import com.engineeringcc.productmanagement.product.domain.ProductNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -28,6 +29,17 @@ public class GlobalExceptionHandler {
                 exception.getClass().getSimpleName(),
                 request.getRequestURI(),
                 errors
+        );
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ErrorResponse notFound(HttpServletRequest request, ProductNotFoundException exception) {
+        return new ErrorResponse(
+                "Product with id " + exception.getMessage() + " not found",
+                exception.getClass().getSimpleName(),
+                request.getRequestURI()
         );
     }
 }

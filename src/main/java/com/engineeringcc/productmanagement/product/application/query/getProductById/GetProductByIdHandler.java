@@ -2,6 +2,7 @@ package com.engineeringcc.productmanagement.product.application.query.getProduct
 
 import com.engineeringcc.productmanagement.common.mediator.RequestHandler;
 import com.engineeringcc.productmanagement.product.application.query.ProductResponse;
+import com.engineeringcc.productmanagement.product.domain.ProductNotFoundException;
 import com.engineeringcc.productmanagement.product.domain.ProductRepository;
 import com.engineeringcc.productmanagement.product.infrastructure.ProductMapper;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class GetProductByIdHandler implements RequestHandler<GetProductByIdReque
     public ProductResponse handle(GetProductByIdRequest request) {
         return repository.findById(request.id())
                 .map(mapper::toProductResponse)
-                .orElseThrow(() -> new RuntimeException("Product not found ".concat(request.id().toString())));
+                .orElseThrow(() -> new ProductNotFoundException(request.id().toString()));
     }
 
     @Override
