@@ -7,6 +7,7 @@ import com.engineeringcc.productmanagement.product.application.command.updatePro
 import com.engineeringcc.productmanagement.product.application.query.ProductResponse;
 import com.engineeringcc.productmanagement.product.application.query.getAllProducts.GetAllProductsRequest;
 import com.engineeringcc.productmanagement.product.application.query.getProductById.GetProductByIdRequest;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,26 +30,26 @@ public class ProductController {
     }
 
     @GetMapping(path = "{id}")
-    public ResponseEntity<ProductResponse> getById(@PathVariable Long id) {
+    public ResponseEntity<ProductResponse> getById(@Valid @PathVariable Long id) {
         GetProductByIdRequest request = new GetProductByIdRequest(id);
         return ResponseEntity.ok(mediator.dispatch(request));
     }
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody CreateProductRequest request) {
+    public ResponseEntity<Void> create(@Valid @RequestBody CreateProductRequest request) {
         mediator.dispatch(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping
-    public ResponseEntity<Void> update(@RequestBody UpdateProductRequest request) {
+    public ResponseEntity<Void> update(@Valid @RequestBody UpdateProductRequest request) {
         mediator.dispatch(request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping(path = "{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
+    public void delete(@Valid @PathVariable Long id) {
         DeleteProductRequest request = new DeleteProductRequest(id);
         mediator.dispatch(request);
     }
