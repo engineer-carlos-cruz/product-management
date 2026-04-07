@@ -36,13 +36,13 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> create(@Valid @RequestBody CreateProductRequest request) {
+    public ResponseEntity<Void> create(@Valid @ModelAttribute CreateProductRequest request) {
         mediator.dispatch(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping
-    public ResponseEntity<Void> update(@Valid @RequestBody UpdateProductRequest request) {
+    public ResponseEntity<Void> update(@Valid @ModelAttribute UpdateProductRequest request) {
         mediator.dispatch(request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

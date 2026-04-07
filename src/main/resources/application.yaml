@@ -1,3 +1,8 @@
 spring:
   application:
     name: product-management
+
+  servlet:
+    multipart:
+      max-request-size: 10MB
+      max-file-size: 1MB

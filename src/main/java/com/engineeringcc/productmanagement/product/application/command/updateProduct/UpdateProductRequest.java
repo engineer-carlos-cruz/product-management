@@ -2,6 +2,7 @@ package com.engineeringcc.productmanagement.product.application.command.updatePr
 
 import com.engineeringcc.productmanagement.common.mediator.Request;
 import jakarta.validation.constraints.*;
+import org.springframework.web.multipart.MultipartFile;
 
 public record UpdateProductRequest(
         @NotNull
@@ -18,5 +19,5 @@ public record UpdateProductRequest(
         Double price,
 
         @NotNull
-        String image
+        MultipartFile file
 ) implements Request<Void> {}
