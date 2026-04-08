@@ -21,7 +21,7 @@ public class File {
         try (InputStream inputStream = file.getInputStream()) {
             String filename = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
             uniqueFileName = UUID.randomUUID().toString().concat("-").concat(filename);
-            Path path = Path.of("src/main/resources/uploads/products");
+            Path path = Path.of("uploads/products");
 
             if (!Files.exists(path)) {
                 Files.createDirectories(path);
