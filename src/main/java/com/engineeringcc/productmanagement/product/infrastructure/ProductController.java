@@ -51,6 +51,6 @@ public class ProductController {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void delete(@Valid @PathVariable Long id) {
         DeleteProductRequest request = new DeleteProductRequest(id);
-        mediator.dispatch(request);
+        mediator.dispatchAsync(request);
     }
 }

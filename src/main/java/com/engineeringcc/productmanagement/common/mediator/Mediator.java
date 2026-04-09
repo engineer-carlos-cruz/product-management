@@ -1,5 +1,6 @@
 package com.engineeringcc.productmanagement.common.mediator;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -35,6 +36,11 @@ public class Mediator {
         }
 
         return invoke(rawHandler, request);
+    }
+
+    @Async
+    public <R> void dispatchAsync(Request<R> request) {
+        this.dispatch(request);
     }
 
     @SuppressWarnings("unchecked")
