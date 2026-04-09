@@ -1,6 +1,5 @@
 package com.engineeringcc.productmanagement.common.util;
 
-import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,7 +12,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Component
-public class File {
+public class FileUtil {
 
     public String saveImage(MultipartFile file) {
         String uniqueFileName;

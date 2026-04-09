@@ -1,7 +1,7 @@
 package com.engineeringcc.productmanagement.product.application.command.updateProduct;
 
 import com.engineeringcc.productmanagement.common.mediator.RequestHandler;
-import com.engineeringcc.productmanagement.common.util.File;
+import com.engineeringcc.productmanagement.common.util.FileUtil;
 import com.engineeringcc.productmanagement.product.domain.Product;
 import com.engineeringcc.productmanagement.product.domain.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -10,16 +10,16 @@ import org.springframework.stereotype.Service;
 public class UpdateProductHandler implements RequestHandler<UpdateProductRequest, Void> {
 
     private final ProductRepository repository;
-    private final File file;
+    private final FileUtil fileUtil;
 
-    public UpdateProductHandler(ProductRepository productRepository, File file) {
+    public UpdateProductHandler(ProductRepository productRepository, FileUtil fileUtil) {
         this.repository = productRepository;
-        this.file = file;
+        this.fileUtil = fileUtil;
     }
 
     @Override
     public Void handle(UpdateProductRequest request) {
-        String uniqueFileName = file.saveImage(request.file());
+        String uniqueFileName = fileUtil.saveImage(request.file());
 
         Product product = Product.builder()
                 .id(request.id())
