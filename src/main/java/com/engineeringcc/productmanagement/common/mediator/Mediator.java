@@ -1,5 +1,7 @@
 package com.engineeringcc.productmanagement.common.mediator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +13,7 @@ import java.util.stream.Collectors;
 @Component
 public class Mediator {
 
+    private static final Logger log = LoggerFactory.getLogger(Mediator.class);
     private final Map<Class<? extends Request<?>>, RequestHandler<?, ?>> requestHandlerMap;
 
     public Mediator(List<RequestHandler<?, ?>> requestHandlers) {
@@ -28,6 +31,7 @@ public class Mediator {
         RequestHandler<?, ?> rawHandler = requestHandlerMap.get(request.getClass());
 
         if (rawHandler == null) {
+            log.error("No handler found for request type: {}.", request.getClass());
             throw new RuntimeException("No handler found for request type " + request.getClass());
         }
 
