@@ -4,11 +4,14 @@ import com.engineeringcc.productmanagement.common.mediator.RequestHandler;
 import com.engineeringcc.productmanagement.common.util.FileUtil;
 import com.engineeringcc.productmanagement.product.domain.Product;
 import com.engineeringcc.productmanagement.product.domain.ProductRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UpdateProductHandler implements RequestHandler<UpdateProductRequest, Void> {
 
+    private static final Logger log = LoggerFactory.getLogger(UpdateProductHandler.class);
     private final ProductRepository repository;
     private final FileUtil fileUtil;
 
@@ -19,6 +22,7 @@ public class UpdateProductHandler implements RequestHandler<UpdateProductRequest
 
     @Override
     public Void handle(UpdateProductRequest request) {
+        log.info("Updating product...");
         String uniqueFileName = fileUtil.saveImage(request.file());
 
         Product product = Product.builder()

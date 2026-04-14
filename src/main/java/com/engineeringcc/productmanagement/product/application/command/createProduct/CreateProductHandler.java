@@ -5,11 +5,14 @@ import com.engineeringcc.productmanagement.common.util.FileUtil;
 import com.engineeringcc.productmanagement.product.domain.Product;
 import com.engineeringcc.productmanagement.product.domain.ProductRepository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CreateProductHandler implements RequestHandler<CreateProductRequest, Void> {
 
+    private static final Logger log = LoggerFactory.getLogger(CreateProductHandler.class);
     private final ProductRepository repository;
     private final FileUtil fileUtil;
 
@@ -20,6 +23,7 @@ public class CreateProductHandler implements RequestHandler<CreateProductRequest
 
     @Override
     public Void handle(CreateProductRequest request) {
+        log.info("Creating new product...");
         String uniqueFileName = fileUtil.saveImage(request.file());
 
         Product product = Product.builder()

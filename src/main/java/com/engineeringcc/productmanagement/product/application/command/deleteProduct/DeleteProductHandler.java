@@ -2,14 +2,14 @@ package com.engineeringcc.productmanagement.product.application.command.deletePr
 
 import com.engineeringcc.productmanagement.common.mediator.RequestHandler;
 import com.engineeringcc.productmanagement.product.domain.ProductRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Service
 public class DeleteProductHandler implements RequestHandler<DeleteProductRequest, Void> {
 
+    private static final Logger log = LoggerFactory.getLogger(DeleteProductHandler.class);
     private final ProductRepository repository;
 
     public DeleteProductHandler(ProductRepository productRepository) {
@@ -18,10 +18,7 @@ public class DeleteProductHandler implements RequestHandler<DeleteProductRequest
 
     @Override
     public Void handle(DeleteProductRequest request) {
-        System.out.println("Deleting product with id "
-                + request.id()
-                + "... / "
-                + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
+        log.info("Deleting product with id {}...", request.id());
 
         try {
             Thread.sleep(10000);
@@ -30,8 +27,7 @@ public class DeleteProductHandler implements RequestHandler<DeleteProductRequest
             throw new RuntimeException(exception);
         }
 
-        System.out.println("Product deleted successfully! / "
-                + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
+        log.info("Product with id {} was deleted.", request.id());
 
         return null;
     }
