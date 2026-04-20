@@ -28,6 +28,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         products.put(entity.getId(), entity);
     }
 
+    @Cacheable(value = "products", key = "'all'")
     @Override
     public List<Product> findAll() {
         return products.values()
