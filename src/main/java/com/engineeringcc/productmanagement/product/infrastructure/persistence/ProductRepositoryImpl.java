@@ -5,6 +5,7 @@ import com.engineeringcc.productmanagement.product.domain.ProductRepository;
 import com.engineeringcc.productmanagement.product.infrastructure.ProductMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
@@ -43,6 +44,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         return Optional.ofNullable(product);
     }
 
+    @CacheEvict(value = "products", key = "#id")
     @Override
     public void deleteById(Long id) {
         products.remove(id);
